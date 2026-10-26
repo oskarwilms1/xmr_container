@@ -1,0 +1,16 @@
+FROM debian:bookworm-slim
+
+WORKDIR /usr/local/xmrnode
+COPY monerod.conf .
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  ca-certificates tor bzip2 wget
+
+RUN wget -O monero.tar.bz2 https://downloads.getmonero.org/cli/linux64
+RUN mkdir monero
+RUN tar xjvf monero.tar.bz2 -C monero --strip-components=1
+
+RUN mkdir -p /var/lib/monero
+VOLUME ["/var/lib/monero"]
+EXPOSE 18084 18089
+
+CMD ["./monero/monerod","--config-file","monerod.conf","--non-interactive"]

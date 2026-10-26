@@ -1,0 +1,6 @@
+DataDirectory /var/lib/tor
+SocksPort 0.0.0.0:9050
+
+HiddenServiceDir /var/lib/tor/monero
+HiddenServicePort 18084 monero:18080
+HiddenServicePort 18089 monero:18089

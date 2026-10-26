@@ -1,0 +1,32 @@
+services:
+ tor:
+  container_name: tor_proxy
+  build: ./tor
+  restart: unless-stopped
+  volumes:
+   - tor-data:/var/lib/tor
+  networks:
+   xmr-tor:
+    ipv4_address: 10.89.0.10
+
+ monero:
+  container_name: xmr_node
+  build: ./monero
+  restart: unless-stopped
+  depends_on:
+   - tor
+  volumes:
+   - monero-data:/var/lib/monero
+  networks:
+   - xmr-tor
+
+networks:
+ xmr-tor:
+  driver: bridge
+  ipam:
+   config:
+    - subnet: 10.89.0.0/24
+
+volumes:
+ tor-data:
+ monero-data:

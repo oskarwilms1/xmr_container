@@ -1,0 +1,22 @@
+FROM debian:bookworm-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  ca-certificates tor curl
+
+
+RUN mkdir -p /var/lib/tor/monero
+RUN chown -R debian-tor:debian-tor /var/lib/tor 
+RUN chmod 700 /var/lib/tor 
+RUN chmod 700 /var/lib/tor/monero
+RUN rm -rf /var/lib/apt/lists/*
+
+VOLUME ["/var/lib/tor"]
+
+COPY torrc /etc/tor/torrc
+
+USER debian-tor
+
+EXPOSE 9050
+
+CMD ["tor","-f","/etc/tor/torrc"]
+
