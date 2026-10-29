@@ -3,7 +3,7 @@ FROM debian:bookworm-slim
 WORKDIR /usr/local/xmrnode
 COPY monerod.conf .
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  ca-certificates tor bzip2 wget
+  ca-certificates bzip2 wget
 
 RUN wget -O monero.tar.bz2 https://downloads.getmonero.org/cli/linux64
 RUN mkdir monero
